@@ -107,8 +107,6 @@ sudo ltsp kernel     # Configure le kernel
 sudo ltsp nfs        # Configure les exports NFS
 ```
 
-**Note :** Vous pouvez voir des erreurs comme `rmdir: impossible de supprimer '/tmp/tmp.xxxxx'`. Ces erreurs sont cosmétiques et n'affectent pas le fonctionnement.
-
 ---
 
 ## Configuration du mot de passe root
