@@ -307,8 +307,8 @@ Lorsque vous modifiez l'interface utilisateur ou les paramètres sur un client (
 
 ### Processus de synchronisation
 
-#### 1. Synchroniser du client vers le serveur
-Après avoir personnalisé l'interface sur un client :
+#### 1. Synchroniser le compte client vers le serveur
+Après avoir personnalisé l'interface du compte client :
 
 **Sur le client**, connectez-vous en root et exécutez :
 ```bash
@@ -328,17 +328,6 @@ sudo rsync -av --progress internet /home/
 ```
 
 Cette commande copie la configuration depuis `/etc/home/internet` (serveur) vers `/home/internet` (disque local du client).
-
-### 💡 Bonnes pratiques
-
-**Pour une modification globale :**
-1. Effectuez les modifications sur **un seul client de référence**
-2. Synchronisez du client vers le serveur : `cd /home && rsync -av --progress internet /etc/home/`
-3. Sur chaque autre client, synchronisez depuis le serveur : `cd /etc/home && rsync -av --progress internet /home/`
-4. Redémarrez les clients pour appliquer les changements
-
-**Automatisation (optionnel) :**
-Vous pouvez créer des scripts pour automatiser cette synchronisation ou l'ajouter au démarrage des clients.
 
 ⚠️ **Attention :** Assurez-vous de toujours faire la synchronisation dans le bon sens pour ne pas écraser des modifications importantes !
 
