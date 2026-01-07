@@ -391,6 +391,6 @@ sudo ltsp image /
 
 ---
 
-**Auteur :** [Votre nom]  
+**Auteur :** Mayse  
 **Dernière mise à jour :** Janvier 2026  
 **Version :** 1.0
