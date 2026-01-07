@@ -310,13 +310,13 @@ Lorsque vous modifiez l'interface utilisateur ou les paramètres sur un client (
 #### 1. Synchroniser le compte client vers le serveur
 Après avoir personnalisé l'interface du compte client :
 
-**Sur le client**, connectez-vous en root et exécutez :
+**Sur le compte client**, connectez-vous en root et exécutez :
 ```bash
 cd /home
 sudo rsync -av --progress internet /etc/home/
 ```
 
-Cette commande copie les modifications du `/home/internet` local vers `/etc/home/internet` du serveur via NFS.
+Cette commande copie les modifications du `/home/internet` local vers `/etc/home/internet` du serveur.
 
 #### 2. Synchroniser du serveur vers les autres clients
 Pour appliquer ces modifications à un autre client ou après un redémarrage :
