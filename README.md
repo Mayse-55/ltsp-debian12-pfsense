@@ -301,6 +301,50 @@ rsync -av --progress internet /home/
 
 ---
 
+## Synchronisation des modifications de l'interface cliente
+
+Lorsque vous modifiez l'interface utilisateur ou les paramètres sur un client (fond d'écran, raccourcis, applications favorites, etc.), vous devez synchroniser ces changements pour qu'ils soient disponibles sur tous les clients.
+
+### Processus de synchronisation
+
+#### 1. Synchroniser du client vers le serveur
+Après avoir personnalisé l'interface sur un client :
+
+**Sur le client**, connectez-vous en root et exécutez :
+```bash
+cd /home
+sudo rsync -av --progress internet /etc/home/
+```
+
+Cette commande copie les modifications du `/home/internet` local vers `/etc/home/internet` du serveur via NFS.
+
+#### 2. Synchroniser du serveur vers les autres clients
+Pour appliquer ces modifications à un autre client ou après un redémarrage :
+
+**Sur le client**, connectez-vous en root et exécutez :
+```bash
+cd /etc/home
+sudo rsync -av --progress internet /home/
+```
+
+Cette commande copie la configuration depuis `/etc/home/internet` (serveur) vers `/home/internet` (disque local du client).
+
+### 💡 Bonnes pratiques
+
+**Pour une modification globale :**
+1. Effectuez les modifications sur **un seul client de référence**
+2. Synchronisez du client vers le serveur : `cd /home && rsync -av --progress internet /etc/home/`
+3. Sur chaque autre client, synchronisez depuis le serveur : `cd /etc/home && rsync -av --progress internet /home/`
+4. Redémarrez les clients pour appliquer les changements
+
+**Automatisation (optionnel) :**
+Vous pouvez créer des scripts pour automatiser cette synchronisation ou l'ajouter au démarrage des clients.
+
+⚠️ **Attention :** Assurez-vous de toujours faire la synchronisation dans le bon sens pour ne pas écraser des modifications importantes !
+
+---
+
+
 ## Intégration avec pfSense
 
 Cette section permet de transférer la gestion DHCP à pfSense tout en conservant le boot PXE LTSP.
