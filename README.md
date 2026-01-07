@@ -28,7 +28,7 @@
 ### Configuration réseau minimale
 - Serveur LTSP : IP fixe sur le réseau local
 - pfSense : Configuré avec DHCP (sera modifié plus tard)
-- Clients : Boot PXE activé dans le BIOS
+- Clients : Boot PXE activé dans le BIOS + Disque dur intégré minimum 32 Go
 
 ---
 
