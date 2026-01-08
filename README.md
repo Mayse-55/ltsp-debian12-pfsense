@@ -413,8 +413,8 @@ sudo systemctl enable tftpd-hpa.service
 ### 4. Test du démarrage client
 1. Redémarrez un client en mode PXE
 2. Le client devrait maintenant :
-   - Obtenir une IP du serveur DHCP pfSense
-   - Booter via iPXE depuis le serveur LTSP
+- Obtenir une IP du serveur DHCP pfSense
+- Booter via iPXE depuis le serveur LTSP
 
 ---
 
@@ -456,6 +456,7 @@ sudo ltsp image /
 ```
  
 ### Erreur détectée autoexec.ipxe
+
 ### Symptôme
 Lors du boot PXE, la machine affiche :
 ```
