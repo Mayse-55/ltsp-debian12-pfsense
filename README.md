@@ -509,7 +509,6 @@ Redémarrez la machine cliente. Elle devrait maintenant :
 Installez les dépendances manquantes dans l'image :
 
 ```bash
-sudo ltsp chroot
 apt install --install-recommends firefox-esr libgtk-3-0 libdbus-glib-1-2
 exit
 sudo ltsp image /
