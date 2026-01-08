@@ -456,8 +456,7 @@ sudo ltsp image /
 ```
  
 ### Erreur détectée autoexec.ipxe
-
-- Symptôme
+### Symptôme
 Lors du boot PXE, la machine affiche :
 ```
 iPXE initialising devices...
@@ -467,7 +466,7 @@ file:/autoexec.ipxe not found
 
 **Cause :** Le fichier `autoexec.ipxe` est manquant dans le répertoire TFTP. Ce fichier est le script de démarrage initial qui indique à iPXE où trouver la configuration LTSP.
 
-- Solution : Création manuelle
+### Solution : Création manuelle
 
 ### 1. Créez le fichier
 ```bash
