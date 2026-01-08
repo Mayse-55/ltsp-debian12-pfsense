@@ -150,7 +150,7 @@ Entrez votre mot de passe souhaité et **copiez le hash généré** (vous en aur
 sudo usermod --password 'VOTRE_HASH_ICI' root
 ```
 
-> [!WARNING]
+> [!IMPORTANT]
 >  Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
 
 ---
