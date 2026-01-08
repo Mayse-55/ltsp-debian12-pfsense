@@ -510,9 +510,7 @@ Installez les dépendances manquantes dans l'image :
 
 ```bash
 apt install --install-recommends firefox-esr libgtk-3-0 libdbus-glib-1-2
-```
-et
-```bash
+
 ltsp image /
 ```
 
