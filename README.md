@@ -4,7 +4,6 @@
 
 [![Debian](https://img.shields.io/badge/Debian-12-A81D33?logo=debian&logoColor=white)](https://www.debian.org/)
 [![pfSense](https://img.shields.io/badge/pfSense-Compatible-212121?logo=pfsense&logoColor=white)](https://www.pfsense.org/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
 
@@ -770,23 +769,11 @@ sudo chmod 644 /srv/tftp/autoexec.ipxe
 
 ---
 
-## Licence
-
-Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
----
-
 ## Auteur
 
 **Mayse**
 
 - GitHub: [@Mayse-55](https://github.com/Mayse-55)
-
----
-
-## Contribution
-
-Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
 
 ---
 
