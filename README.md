@@ -433,20 +433,20 @@ Redémarrez la machine cliente. Elle devrait maintenant :
 
 ## Dépannage
 
-### Le client ne boot pas en PXE
+### 1. Le client ne boot pas en PXE
 - Vérifiez que le boot PXE est activé dans le BIOS
 - Vérifiez que le câble réseau est bien branché
 - Vérifiez les logs dnsmasq : `sudo journalctl -u dnsmasq -f`
 
-### Erreur "No such file or directory" lors du boot
+### 2. Erreur "No such file or directory" lors du boot
 - Vérifiez que les fichiers existent dans `/srv/tftp/ltsp/`
 - Relancez : `sudo ltsp initrd && sudo ltsp ipxe`
 
-### Le client boot mais ne monte pas /home
+### 3. Le client boot mais ne monte pas /home
 - Vérifiez que la partition a bien le label "home" : `sudo e2label /dev/sda1`
 - Vérifiez la ligne FSTAB_x dans `/etc/ltsp/ltsp.conf`
 
-### Firefox ne se lance pas
+### 4. Firefox ne se lance pas
 - Installez les dépendances manquantes dans l'image :
 ```bash
 sudo ltsp chroot
@@ -455,7 +455,7 @@ exit
 sudo ltsp image /
 ```
  
-### Erreur détectée autoexec.ipxe
+### 5. Erreur détectée autoexec.ipxe
 
 ### Symptôme
 Lors du boot PXE, la machine affiche :
