@@ -476,6 +476,7 @@ sudo nano /srv/tftp/autoexec.ipxe
 ```
 
 **2. Ajoutez ce contenu**
+
 Remplacez `172.16.8.3` par l'IP de votre serveur LTSP
 ```ipxe
 #!ipxe
