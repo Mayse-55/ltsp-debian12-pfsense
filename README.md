@@ -454,6 +454,54 @@ apt install --install-recommends firefox-esr libgtk-3-0 libdbus-glib-1-2
 exit
 sudo ltsp image /
 ```
+ 
+### Erreur détectée : `autoexec.ipxe not found`  
+
+### Symptôme
+Lors du boot PXE, la machine affiche :
+```
+iPXE initialising devices...
+file:autoexec.ipxe not found
+file:/autoexec.ipxe not found
+```
+
+**Cause :** Le fichier `autoexec.ipxe` est manquant dans le répertoire TFTP. Ce fichier est le script de démarrage initial qui indique à iPXE où trouver la configuration LTSP.
+
+---
+
+## Solution : Création manuelle
+
+### 1. Créez le fichier
+```bash
+sudo nano /srv/tftp/autoexec.ipxe
+```
+
+### 2. Ajoutez ce contenu
+> **Important :** Remplacez `172.16.8.3` par l'IP de votre serveur LTSP
+```ipxe
+#!ipxe
+dhcp
+chain tftp://172.16.8.3/ltsp/ltsp.ipxe
+```
+
+### 3. Sauvegardez le fichier
+- Appuyez sur `Ctrl+X`
+- Tapez `Y` pour confirmer
+- Appuyez sur `Entrée`
+
+### 4. Définissez les permissions correctes
+```bash
+sudo chmod 644 /srv/tftp/autoexec.ipxe
+```
+
+**Explication des permissions (644) :**
+- `6` (propriétaire) = lecture + écriture (rw-)
+- `4` (groupe) = lecture seule (r--)
+- `4` (autres) = lecture seule (r--)
+
+Résultat : `rw-r--r--` (le serveur TFTP peut modifier, les clients peuvent lire)
+
+---
 
 ## 📝 Notes importantes
 
