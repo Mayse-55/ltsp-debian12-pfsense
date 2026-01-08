@@ -151,7 +151,7 @@ Entrez votre mot de passe souhaité et **copiez le hash généré** (vous en aur
 sudo usermod --password 'VOTRE_HASH_ICI' root
 ```
 
-> ⚠️ Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
+> Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
 
 ---
 
@@ -201,7 +201,7 @@ X_VERTREFRESH="43.0-87.0"
 X_MODES='"1920x1080" "1680x1050" "1280x720" "1280x800" "1024x768" "800x600" "640x480"'
 ```
 
-> ⚠️ **Important :** Remplacez :
+> [!!warning] :** Remplacez :
 > - `192.168.1.100` par l'IP de votre serveur LTSP
 > - `VOTRE_HASH_COMPLET_ICI` par le hash généré précédemment (tout le hash, y compris les `$`)
 
