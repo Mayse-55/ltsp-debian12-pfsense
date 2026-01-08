@@ -338,7 +338,7 @@ Cette commande copie le profil de référence depuis `/etc/home/internet/` (serv
 - Vérifiez toujours le sens de synchronisation pour éviter les pertes de données
 - Testez d'abord sans `--delete` si vous n'êtes pas sûr
   
-## Automatisation 
+## Automatisation (facultatif)
 
 Pour automatiser la synchronisation au démarrage des clients LTSP, j'ai créé un script disponible ici :
 
