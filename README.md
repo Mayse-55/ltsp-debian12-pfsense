@@ -416,9 +416,10 @@ sudo systemctl enable tftpd-hpa.service
    - Obtenir une IP du serveur DHCP pfSense
    - Booter via iPXE depuis le serveur LTSP
 
-[!warning] Fix LTSP iPXE : Erreur "autoexec.ipxe not found"
+> [!WARNING]
+> **Fix LTSP iPXE : Erreur "autoexec.ipxe not found"**
 
-## Symptôme
+### Symptôme
 Lors du boot PXE, la machine affiche :
 ```
 iPXE initialising devices...
@@ -426,13 +427,11 @@ file:autoexec.ipxe not found
 file:/autoexec.ipxe not found
 ```
 
-Le fichier `autoexec.ipxe` est manquant dans le répertoire TFTP. Ce fichier est le script de démarrage initial qui indique à iPXE où trouver la configuration LTSP.
+**Cause :** Le fichier `autoexec.ipxe` est manquant dans le répertoire TFTP. Ce fichier est le script de démarrage initial qui indique à iPXE où trouver la configuration LTSP.
 
 ---
 
 ## Solution : Création manuelle
-
-Si la commande `ltsp ipxe` ne fonctionne pas ou si vous préférez créer le fichier manuellement :
 
 ### 1. Créez le fichier
 ```bash
@@ -440,8 +439,7 @@ sudo nano /srv/tftp/autoexec.ipxe
 ```
 
 ### 2. Ajoutez ce contenu
-**Important :** Remplacez `172.16.8.3` par l'IP de votre serveur LTSP
-
+> **Important :** Remplacez `172.16.8.3` par l'IP de votre serveur LTSP
 ```ipxe
 #!ipxe
 dhcp
