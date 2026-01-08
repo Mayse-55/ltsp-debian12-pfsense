@@ -1,8 +1,6 @@
 
 # Guide d'installation LTSP sur Debian 12 avec pfSense
 
----
-
 ## 📋 Table des matières
 1. [Prérequis](#prérequis)
 2. [Installation du système de base](#installation-du-système-de-base)
