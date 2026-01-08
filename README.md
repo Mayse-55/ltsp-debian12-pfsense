@@ -360,11 +360,11 @@ rsync -av --progress internet /home/
 1. **Sur le serveur**, lancez l'interface graphique en console
 2. Connectez-vous avec le **compte client** (exemple : `internet`)
 3. Personnalisez l'interface comme souhaité :
-   - Fond d'écran
-   - Thème
-   - Applications favorites
-   - Paramètres du bureau
-   - etc.
+ - Fond d'écran
+ - Thème
+ - Applications favorites
+ - Paramètres du bureau
+ - etc.
 
 ### Étape 2 : Sauvegarder les modifications sur le serveur
 
