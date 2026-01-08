@@ -431,7 +431,7 @@ Redémarrez la machine cliente. Elle devrait maintenant :
 
 ---
 
-## 🔧 Dépannage
+## Dépannage
 
 ### Le client ne boot pas en PXE
 - Vérifiez que le boot PXE est activé dans le BIOS
