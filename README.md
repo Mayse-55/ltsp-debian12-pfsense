@@ -14,6 +14,7 @@
 8. [Configuration réseau](#configuration-réseau)
 9. [Déploiement du client](#déploiement-du-client)
 10. [Intégration avec pfSense](#intégration-avec-pfsense)
+11. [Dépannage du client)(#dépannage-du-client)
 
 ---
 
