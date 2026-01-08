@@ -78,7 +78,7 @@ sudo apt install ltsp dnsmasq nfs-kernel-server squashfs-tools tftpd-hpa ipxe -y
 - `dnsmasq` : Serveur DHCP/DNS/TFTP léger
 - `nfs-kernel-server` : Partage de fichiers réseau
 - `squashfs-tools` : Création d'images compressées
-- `tftpd-hpa` : Serveur TFTP (sera désactivé au profit de dnsmasq) sauf si utilisation de pfsense
+- `tftpd-hpa` : Serveur TFTP (sera désactivé au profit de dnsmasq) mais servira plus tard
 - `ipxe` : Firmware de boot réseau
 
 ### 2. Arrêt du service tftpd-hpa
