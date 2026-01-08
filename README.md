@@ -1,7 +1,5 @@
 # Guide d'installation LTSP sur Debian 12 avec pfSense
 
-> Guide complet pour déployer un serveur LTSP (Linux Terminal Server Project) sur Debian 12 avec intégration pfSense
-
 [![Debian](https://img.shields.io/badge/Debian-12-A81D33?logo=debian&logoColor=white)](https://www.debian.org/)
 [![pfSense](https://img.shields.io/badge/pfSense-Compatible-212121?logo=pfsense&logoColor=white)](https://www.pfsense.org/)
 
