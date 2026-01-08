@@ -443,16 +443,6 @@ exit
 sudo ltsp image /
 ```
 
----
-
-## 📚 Ressources
-
-- [Documentation officielle LTSP](https://ltsp.org/)
-- [Documentation pfSense](https://docs.netgate.com/pfsense/)
-- [Wiki Debian](https://wiki.debian.org/)
-
----
-
 ## 📝 Notes importantes
 
 - Ce guide est conçu pour un **environnement de test (hors production)**
