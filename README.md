@@ -301,11 +301,11 @@ rsync -av --progress internet /home/
 
 ---
 
-# Synchronisation des profils utilisateur LTSP
+## Synchronisation des profils utilisateur LTSP
 
 ### Étape 1 : Personnaliser l'interface utilisateur
 1. **Sur le serveur**, lancez l'interface graphique en console
-2. 2. Connectez-vous avec le **compte client** (exemple : `internet`)
+2. Connectez-vous avec le **compte client** (exemple : `internet`)
 3. Personnalisez l'interface comme souhaité :
    - Fond d'écran
    - Thème
