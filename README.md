@@ -4,211 +4,6 @@
 
 [![Debian](https://img.shields.io/badge/Debian-12-A81D33?logo=debian&logoColor=white)](https://www.debian.org/)
 [![pfSense](https://img.shields.io/badge/pfSense-Compatible-212121?logo=pfsense&logoColor=white)](https://www.pfsense.org/)
-
----
-
-## Table des matières
-
-- [Prérequis](#prérequis)
-- [Installation du système de base](#installation-du-système-de-base)
-- [Installation du bureau XFCE](#installation-du-bureau-xfce)
-- [Installation et configuration de LTSP](#installation-et-configuration-de-ltsp)
-- [Configuration du mot de passe root](#configuration-du-mot-de-passe-root)
-- [Configuration de ltsp.conf](#configuration-de-ltspconf)
-- [Création du compte utilisateur](#création-du-compte-utilisateur)
-- [Configuration réseau](#configuration-réseau)
-- [Déploiement du client](#déploiement-du-client)
-- [Synchronisation des profils utilisateur](#synchronisation-des-profils-utilisateur-ltsp)
-- [Intégration avec pfSense](#intégration-avec-pfsense)
-- [Dépannage](#dépannage)
-
----
-
-## Prérequis
-
-### Infrastructure nécessaire
-
-| Composant | Description |
-|-----------|-------------|
-| **Serveur LTSP** | VM Debian 12 |
-| **Routeur/Firewall** | pfSense |
-| **Client(s)** | Machines compatibles PXE boot |
-| **VM Windows** | (Facultatif) Pour administrer pfSense via interface graphique |
-
-### Configuration réseau minimale
-
-- **Serveur LTSP** : IP fixe sur le réseau local
-- **pfSense** : Configuré avec DHCP (sera modifié plus tard)
-- **Clients** : Boot PXE activé dans le BIOS + Disque dur intégré minimum 32 Go
-
----
-
-## Installation du système de base
-
-### Mise à jour du système
-
-```bash
-sudo apt update
-sudo apt upgrade -y
-```
-
-### Installation d'OpenSSH (facultatif mais recommandé)
-
-```bash
-sudo apt install openssh-server -y
-sudo systemctl enable ssh
-sudo systemctl start ssh
-```
-
----
-
-## Installation du bureau XFCE
-
-Installation complète de l'environnement de bureau XFCE avec tous les composants nécessaires :
-
-```bash
-sudo apt install xfce4 xfce4-goodies lightdm firefox-esr dbus-x11 -y
-```
-
-**Composants installés :**
-
-- `xfce4` : Environnement de bureau principal
-- `xfce4-goodies` : Applications supplémentaires XFCE
-- `lightdm` : Gestionnaire de connexion graphique
-- `firefox-esr` : Navigateur web
-- `dbus-x11` : Bus de messages pour l'environnement graphique
-
----
-
-## Installation et configuration de LTSP
-
-### 1. Installation des paquets LTSP
-
-```bash
-sudo apt install ltsp dnsmasq nfs-kernel-server squashfs-tools tftpd-hpa ipxe -y
-```
-
-**Paquets installés :**
-
-- `ltsp` : Linux Terminal Server Project
-- `dnsmasq` : Serveur DHCP/DNS/TFTP léger
-- `nfs-kernel-server` : Partage de fichiers réseau
-- `squashfs-tools` : Création d'images compressées
-- `tftpd-hpa` : Serveur TFTP (sera désactivé au profit de dnsmasq)
-- `ipxe` : Firmware de boot réseau
-
-### 2. Arrêt du service tftpd-hpa
-
-LTSP utilise dnsmasq comme serveur TFTP, donc on désactive tftpd-hpa :
-
-```bash
-sudo systemctl stop tftpd-hpa.service
-sudo systemctl disable tftpd-hpa.service
-sudo systemctl status tftpd-hpa.service
-```
-
-### 3. Construction de l'image LTSP
-
-```bash
-sudo ltsp image /
-```
-
-> [!NOTE] Cette commande peut prendre plusieurs minutes - elle crée une image compressée du système.
-
-### 4. Configuration des services LTSP
-
-Exécutez ces commandes dans l'ordre :
-
-```bash
-sudo ltsp dnsmasq    # Configure dnsmasq pour LTSP
-sudo ltsp initrd     # Génère l'initramfs pour le boot
-sudo ltsp ipxe       # Configure iPXE
-sudo ltsp kernel     # Configure le kernel
-sudo ltsp nfs        # Configure les exports NFS
-```
-
----
-
-## Configuration du mot de passe root
-
-### 1. Installation de l'outil de génération de hash
-
-```bash
-sudo apt install whois -y
-```
-
-### 2. Génération du hash du mot de passe
-
-```bash
-mkpasswd -m yescrypt
-```
-
-Entrez votre mot de passe souhaité et **copiez le hash généré** (vous en aurez besoin pour ltsp.conf).
-
-### 3. Application du mot de passe root sur le serveur
-
-```bash
-sudo usermod --password 'VOTRE_HASH_ICI' root
-```
-
-> **Attention:** Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
-
----
-
-## Configuration de ltsp.conf
-
-### 1. Édition du fichier de configuration
-
-```bash
-sudo nano /etc/ltsp/ltsp.conf
-```
-
-### 2. Contenu du fichier ltsp.conf
-
-Copiez et adaptez la configuration suivante :
-
-```ini
-[server]
-# IP du serveur LTSP
-SERVER="192.168.1.100"
-
-[common]
-# Timeout du menu de boot (-1 = pas de timeout)
-MENU_TIMEOUT="-1"
-
-[clients]
-# Connexion automatique avec le compte 'internet'
-AUTOLOGIN=internet
-# Pas de demande de reconnexion
-RELOGIN=0
-# Définir le mot de passe root sur les clients
-POST_INIT_SET_ROOT_HASH="section_set_root_hash"
-# Inclure la configuration des moniteurs CRT
-INCLUDE=crt_monitor
-# Montage automatique de la partition /home
-FSTAB_x="LABEL=home     /home   ext4    defaults        0       0"
-# Serveur d'impression
-CUPS_SERVER="localhost"
-
-[set_root_hash]
-# Commande pour définir le mot de passe root (remplacez par votre hash)
-sed 's|^root:[^:]*:|root:$y$j9T$VOTRE_HASH_COMPLET_ICI:|' -i /etc/shadow
-
-[crt_monitor]
-# Configuration pour différentes résolutions d'écran
-X_HORIZSYNC="28.0-87.0"
-X_VERTREFRESH="43.0-87.0"
-X_MODES='"1920x1080" "1680x1050" "1280x720" "1280x800" "1024x768" "800x600" "640x480"'
-```
-
-> **Important:** Remplacez :
-> - `192.168.1.100` par l'IP de votre serveur LTSP
-> - `VOTRE_HASH_COMPLET_ICI` par le hash généré précédemment (tout le hash, y compris les `# Guide d'installation LTSP sur Debian 12 avec pfSense
-
-> Guide complet pour déployer un serveur LTSP (Linux Terminal Server Project) sur Debian 12 avec intégration pfSense
-
-[![Debian](https://img.shields.io/badge/Debian-12-A81D33?logo=debian&logoColor=white)](https://www.debian.org/)
-[![pfSense](https://img.shields.io/badge/pfSense-Compatible-212121?logo=pfsense&logoColor=white)](https://www.pfsense.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
@@ -319,7 +114,8 @@ sudo systemctl status tftpd-hpa.service
 sudo ltsp image /
 ```
 
-> **Note:** Cette commande peut prendre plusieurs minutes - elle crée une image compressée du système.
+> [!NOTE]
+>  Cette commande peut prendre plusieurs minutes - elle crée une image compressée du système.
 
 ### 4. Configuration des services LTSP
 
@@ -357,7 +153,8 @@ Entrez votre mot de passe souhaité et **copiez le hash généré** (vous en aur
 sudo usermod --password 'VOTRE_HASH_ICI' root
 ```
 
-> **Attention:** Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
+> [!WARNING]
+>  Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
 
 ---
 
@@ -407,7 +204,10 @@ X_VERTREFRESH="43.0-87.0"
 X_MODES='"1920x1080" "1680x1050" "1280x720" "1280x800" "1024x768" "800x600" "640x480"'
 ```
 
-)
+> [!IMPORTANT]
+> Remplacez :
+> - `192.168.1.100` par l'IP de votre serveur LTSP
+> - `VOTRE_HASH_COMPLET_ICI` par le hash généré précédemment (tout le hash, y compris les `$`)
 
 ---
 
@@ -520,7 +320,8 @@ Repérez la partition que vous souhaitez utiliser pour /home (exemple: `/dev/sda
 sudo mkfs.ext4 /dev/sda1
 ```
 
-> **Attention:** Cette commande efface toutes les données de la partition.
+> [!CAUTION]
+>  Cette commande efface toutes les données de la partition.
 
 #### Définir le label
 
@@ -592,7 +393,7 @@ sudo rsync -av --progress --delete-after /etc/home/internet/ /home/internet/
 
 Cette commande copie le profil de référence depuis `/etc/home/internet/` (serveur) vers `/home/internet/` (client local).
 
-> **Attention:**
+> [!CAUTION]
 > - L'option `--delete` supprime les fichiers sur la destination qui n'existent pas sur la source
 > - Vérifiez toujours le sens de synchronisation pour éviter les pertes de données
 > - Testez d'abord sans `--delete` si vous n'êtes pas sûr
