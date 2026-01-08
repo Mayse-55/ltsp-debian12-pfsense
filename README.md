@@ -301,38 +301,78 @@ rsync -av --progress internet /home/
 
 ---
 
-## Synchronisation des modifications de l'interface cliente
+# Synchronisation des profils utilisateur LTSP
 
-Lorsque vous modifiez l'interface utilisateur ou les paramètres sur un client (fond d'écran, raccourcis, applications favorites, etc.), vous devez synchroniser ces changements pour qu'ils soient disponibles sur tous les clients.
+### Étape 1 : Personnaliser l'interface utilisateur
+1. **Sur le serveur**, lancez l'interface graphique en console
+2. 2. Connectez-vous avec le **compte client** (exemple : `internet`)
+3. Personnalisez l'interface comme souhaité :
+   - Fond d'écran
+   - Thème
+   - Applications favorites
+   - Paramètres du bureau
+   - etc.
 
-### Processus de synchronisation
+### Étape 2 : Sauvegarder les modifications sur le serveur
+Une fois la personnalisation terminée :
 
-#### 1. Synchroniser le compte client vers le serveur
-Après avoir personnalisé l'interface du compte client :
-
-**Sur le compte client**, connectez-vous en root et exécutez :
+**Sur le serveur en console** (connexion root) :
 ```bash
-cd /home
-sudo rsync -av --progress internet /etc/home/
+sudo rsync -av --progress --delete-after /home/internet/ /etc/home/internet/
 ```
 
-Cette commande copie les modifications du `/home/internet` local vers `/etc/home/internet` du serveur.
+Cette commande sauvegarde toutes les modifications du profil utilisateur depuis `/home/internet/` vers `/etc/home/internet/` qui servira de modèle.
 
-#### 2. Synchroniser du serveur vers les autres clients
-Pour appliquer ces modifications à un autre client ou après un redémarrage :
+### Étape 3 : Synchroniser lors du démarrage des clients LTSP
+À chaque démarrage d'un client LTSP, pour appliquer les dernières modifications :
 
-**Sur le client**, connectez-vous en root et exécutez :
+**Sur le client en console** (connexion root) :
 ```bash
-cd /etc/home
-sudo rsync -av --progress internet /home/
+sudo rsync -av --progress --delete-after /etc/home/internet/ /home/internet/
 ```
 
-Cette commande copie la configuration depuis `/etc/home/internet` (serveur) vers `/home/internet` (disque local du client).
+Cette commande copie le profil de référence depuis `/etc/home/internet/` (serveur) vers `/home/internet/` (client local).
 
-⚠️ **Attention :** Assurez-vous de toujours faire la synchronisation dans le bon sens pour ne pas écraser des modifications importantes !
+⚠️ **Attention :** 
+- L'option `--delete` supprime les fichiers sur la destination qui n'existent pas sur la source
+- Vérifiez toujours le sens de synchronisation pour éviter les pertes de données
+- Testez d'abord sans `--delete` si vous n'êtes pas sûr
+  
+## Automatisation 
+
+Pour automatiser la synchronisation au démarrage des clients LTSP, j'ai créé un script disponible ici :
+
+**🔗 [Script-Update-Image-LTSP](https://github.com/Mayse-55/Script-Update-Image-LTSP)**
+
+### Fonctionnalités du script :
+
+✅ **Synchronisation intelligente** : Le script se lance automatiquement au premier démarrage du client et synchronise les profils depuis `/etc/bpx/` vers `/home/`
+
+✅ **Exécution unique** : Utilise un système de flag (`/home/internet/tags/test.flag`) pour ne s'exécuter qu'une seule fois par session
+
+✅ **Interface utilisateur** : Ouvre automatiquement un terminal XFCE4 avec progression visuelle de la synchronisation
+
+✅ **Exclusions intelligentes** : Préserve les données personnelles des utilisateurs :
+- Dossiers Bureau, Documents, Images, Téléchargements, Vidéos, Musique
+- Cache navigateurs (.mozilla, .thunderbird, .cache)
+- Dossier de tags
+
+✅ **Redémarrage automatique** : Compte à rebours de 10 secondes avant redémarrage pour finaliser la mise à jour
+
+### Déroulement du script :
+
+1. Vérification du flag → si déjà présent, le script s'arrête
+2. Ouverture d'un terminal graphique si nécessaire
+3. Création du flag pour marquer l'exécution
+4. Synchronisation avec `rsync` (avec barre de progression)
+5. Compte à rebours de 10 secondes
+6. Redémarrage automatique du client
+
+### Installation :
+
+Consultez le dépôt GitHub pour l'installation et la configuration détaillées.
 
 ---
-
 
 ## Intégration avec pfSense
 
