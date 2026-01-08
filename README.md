@@ -113,7 +113,7 @@ sudo systemctl status tftpd-hpa.service
 sudo ltsp image /
 ```
 
-> **Note:** Cette commande peut prendre plusieurs minutes - elle crée une image compressée du système.
+> [!NOTE] Cette commande peut prendre plusieurs minutes - elle crée une image compressée du système.
 
 ### 4. Configuration des services LTSP
 
