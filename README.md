@@ -510,8 +510,10 @@ Installez les dépendances manquantes dans l'image :
 
 ```bash
 apt install --install-recommends firefox-esr libgtk-3-0 libdbus-glib-1-2
-exit
-sudo ltsp image /
+```
+et
+```bash
+ltsp image /
 ```
 
 ### 5. Erreur autoexec.ipxe manquant
