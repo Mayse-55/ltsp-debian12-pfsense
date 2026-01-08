@@ -407,13 +407,74 @@ sudo systemctl enable tftpd-hpa.service
 2. Cochez **"Enable network booting"**
 3. Dans **"Next Server"**, entrez l'IP de votre serveur LTSP (exemple: `192.168.1.100`)
 4. Dans **"Default BIOS file name"**, entrez : `ltsp/ltsp.ipxe`
-5. Cliquez sur **"Save"**
+5. Dans **UEFI 64 bit File Name**, entrez : `ltsp/snponly.efi`
+6. Cliquez sur **"Save"**
 
 ### 4. Test du démarrage client
 1. Redémarrez un client en mode PXE
 2. Le client devrait maintenant :
    - Obtenir une IP du serveur DHCP pfSense
    - Booter via iPXE depuis le serveur LTSP
+
+[!warning] Fix LTSP iPXE : Erreur "autoexec.ipxe not found"
+
+## Symptôme
+Lors du boot PXE, la machine affiche :
+```
+iPXE initialising devices...
+file:autoexec.ipxe not found
+file:/autoexec.ipxe not found
+```
+
+Le fichier `autoexec.ipxe` est manquant dans le répertoire TFTP. Ce fichier est le script de démarrage initial qui indique à iPXE où trouver la configuration LTSP.
+
+---
+
+## Solution : Création manuelle
+
+Si la commande `ltsp ipxe` ne fonctionne pas ou si vous préférez créer le fichier manuellement :
+
+### 1. Créez le fichier
+```bash
+sudo nano /srv/tftp/autoexec.ipxe
+```
+
+### 2. Ajoutez ce contenu
+**Important :** Remplacez `172.16.8.3` par l'IP de votre serveur LTSP
+
+```ipxe
+#!ipxe
+dhcp
+chain tftp://172.16.8.3/ltsp/ltsp.ipxe
+```
+
+### 3. Sauvegardez le fichier
+- Appuyez sur `Ctrl+X`
+- Tapez `Y` pour confirmer
+- Appuyez sur `Entrée`
+
+### 4. Définissez les permissions correctes
+```bash
+sudo chmod 644 /srv/tftp/autoexec.ipxe
+```
+
+**Explication des permissions (644) :**
+- `6` (propriétaire) = lecture + écriture (rw-)
+- `4` (groupe) = lecture seule (r--)
+- `4` (autres) = lecture seule (r--)
+
+Résultat : `rw-r--r--` (le serveur TFTP peut modifier, les clients peuvent lire)
+
+---
+
+## Redémarrage du client
+
+Redémarrez la machine cliente. Elle devrait maintenant :
+1. ✅ Obtenir une IP via DHCP
+2. ✅ Charger iPXE
+3. ✅ Trouver `autoexec.ipxe`
+4. ✅ Charger `ltsp.ipxe`
+5. ✅ Booter sur le système LTSP
 
 ✅ **Configuration terminée !** Vous pouvez maintenant mettre en place un portail captif ou d'autres fonctionnalités pfSense.
 
