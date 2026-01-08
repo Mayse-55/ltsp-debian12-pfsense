@@ -346,7 +346,7 @@ Pour automatiser la synchronisation au démarrage des clients LTSP, j'ai créé 
 
 ### Fonctionnalités du script :
 
-✅ **Synchronisation intelligente** : Le script se lance automatiquement au premier démarrage du client et synchronise les profils depuis `/etc/bpx/` vers `/home/`
+✅ **Synchronisation intelligente** : Le script se lance automatiquement au lancement de la session du client et synchronise les profils depuis `/etc/bpx/` vers `/home/`
 
 ✅ **Exécution unique** : Utilise un système de flag (`/home/internet/tags/test.flag`) pour ne s'exécuter qu'une seule fois par session
 
