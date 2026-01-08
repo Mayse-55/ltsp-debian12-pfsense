@@ -361,7 +361,6 @@ sudo systemctl enable tftpd-hpa.service
 2. Descendez jusqu'à la section **"TFTP Server"**
 3. Cliquez sur **"Display Advanced"**
 4. Dans le champ **"TFTP Server"**, entrez l'IP de votre serveur LTSP (exemple: `192.168.1.100`)
-5. Cliquez sur **"Hide Advanced"**
 
 #### Configuration Network Booting
 1. Trouvez la section **"Network Booting"**
