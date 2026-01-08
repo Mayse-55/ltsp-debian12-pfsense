@@ -1,30 +1,31 @@
-# 🖥️ Guide d'installation LTSP sur Debian 12 avec pfSense
+# Guide d'installation LTSP sur Debian 12 avec pfSense
 
 > Guide complet pour déployer un serveur LTSP (Linux Terminal Server Project) sur Debian 12 avec intégration pfSense
 
 [![Debian](https://img.shields.io/badge/Debian-12-A81D33?logo=debian&logoColor=white)](https://www.debian.org/)
 [![pfSense](https://img.shields.io/badge/pfSense-Compatible-212121?logo=pfsense&logoColor=white)](https://www.pfsense.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
 
-## 📋 Table des matières
+## Table des matières
 
-- [Prérequis](#-prérequis)
-- [Installation du système de base](#-installation-du-système-de-base)
-- [Installation du bureau XFCE](#-installation-du-bureau-xfce)
-- [Installation et configuration de LTSP](#-installation-et-configuration-de-ltsp)
-- [Configuration du mot de passe root](#-configuration-du-mot-de-passe-root)
-- [Configuration de ltsp.conf](#-configuration-de-ltspconf)
-- [Création du compte utilisateur](#-création-du-compte-utilisateur)
-- [Configuration réseau](#-configuration-réseau)
-- [Déploiement du client](#-déploiement-du-client)
-- [Synchronisation des profils utilisateur](#-synchronisation-des-profils-utilisateur-ltsp)
-- [Intégration avec pfSense](#-intégration-avec-pfsense)
-- [Dépannage](#-dépannage)
+- [Prérequis](#prérequis)
+- [Installation du système de base](#installation-du-système-de-base)
+- [Installation du bureau XFCE](#installation-du-bureau-xfce)
+- [Installation et configuration de LTSP](#installation-et-configuration-de-ltsp)
+- [Configuration du mot de passe root](#configuration-du-mot-de-passe-root)
+- [Configuration de ltsp.conf](#configuration-de-ltspconf)
+- [Création du compte utilisateur](#création-du-compte-utilisateur)
+- [Configuration réseau](#configuration-réseau)
+- [Déploiement du client](#déploiement-du-client)
+- [Synchronisation des profils utilisateur](#synchronisation-des-profils-utilisateur-ltsp)
+- [Intégration avec pfSense](#intégration-avec-pfsense)
+- [Dépannage](#dépannage)
 
 ---
 
-## 🔧 Prérequis
+## Prérequis
 
 ### Infrastructure nécessaire
 
@@ -43,7 +44,7 @@
 
 ---
 
-## 📦 Installation du système de base
+## Installation du système de base
 
 ### Mise à jour du système
 
@@ -62,7 +63,7 @@ sudo systemctl start ssh
 
 ---
 
-## 🖼️ Installation du bureau XFCE
+## Installation du bureau XFCE
 
 Installation complète de l'environnement de bureau XFCE avec tous les composants nécessaires :
 
@@ -80,7 +81,7 @@ sudo apt install xfce4 xfce4-goodies lightdm firefox-esr dbus-x11 -y
 
 ---
 
-## ⚙️ Installation et configuration de LTSP
+## Installation et configuration de LTSP
 
 ### 1. Installation des paquets LTSP
 
@@ -113,8 +114,7 @@ sudo systemctl status tftpd-hpa.service
 sudo ltsp image /
 ```
 
-> [!NOTE] 
-> **Cette commande peut prendre plusieurs minutes** - elle crée une image compressée du système.
+> **Note:** Cette commande peut prendre plusieurs minutes - elle crée une image compressée du système.
 
 ### 4. Configuration des services LTSP
 
@@ -130,7 +130,7 @@ sudo ltsp nfs        # Configure les exports NFS
 
 ---
 
-## 🔐 Configuration du mot de passe root
+## Configuration du mot de passe root
 
 ### 1. Installation de l'outil de génération de hash
 
@@ -152,11 +152,11 @@ Entrez votre mot de passe souhaité et **copiez le hash généré** (vous en aur
 sudo usermod --password 'VOTRE_HASH_ICI' root
 ```
 
-> Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
+> **Attention:** Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
 
 ---
 
-## 📝 Configuration de ltsp.conf
+## Configuration de ltsp.conf
 
 ### 1. Édition du fichier de configuration
 
@@ -202,13 +202,217 @@ X_VERTREFRESH="43.0-87.0"
 X_MODES='"1920x1080" "1680x1050" "1280x720" "1280x800" "1024x768" "800x600" "640x480"'
 ```
 
-> [!!warning] :** Remplacez :
+> **Important:** Remplacez :
 > - `192.168.1.100` par l'IP de votre serveur LTSP
-> - `VOTRE_HASH_COMPLET_ICI` par le hash généré précédemment (tout le hash, y compris les `$`)
+> - `VOTRE_HASH_COMPLET_ICI` par le hash généré précédemment (tout le hash, y compris les `# Guide d'installation LTSP sur Debian 12 avec pfSense
+
+> Guide complet pour déployer un serveur LTSP (Linux Terminal Server Project) sur Debian 12 avec intégration pfSense
+
+[![Debian](https://img.shields.io/badge/Debian-12-A81D33?logo=debian&logoColor=white)](https://www.debian.org/)
+[![pfSense](https://img.shields.io/badge/pfSense-Compatible-212121?logo=pfsense&logoColor=white)](https://www.pfsense.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
 
-## 👤 Création du compte utilisateur
+## Table des matières
+
+- [Prérequis](#prérequis)
+- [Installation du système de base](#installation-du-système-de-base)
+- [Installation du bureau XFCE](#installation-du-bureau-xfce)
+- [Installation et configuration de LTSP](#installation-et-configuration-de-ltsp)
+- [Configuration du mot de passe root](#configuration-du-mot-de-passe-root)
+- [Configuration de ltsp.conf](#configuration-de-ltspconf)
+- [Création du compte utilisateur](#création-du-compte-utilisateur)
+- [Configuration réseau](#configuration-réseau)
+- [Déploiement du client](#déploiement-du-client)
+- [Synchronisation des profils utilisateur](#synchronisation-des-profils-utilisateur-ltsp)
+- [Intégration avec pfSense](#intégration-avec-pfsense)
+- [Dépannage](#dépannage)
+
+---
+
+## Prérequis
+
+### Infrastructure nécessaire
+
+| Composant | Description |
+|-----------|-------------|
+| **Serveur LTSP** | VM Debian 12 |
+| **Routeur/Firewall** | pfSense |
+| **Client(s)** | Machines compatibles PXE boot |
+| **VM Windows** | (Facultatif) Pour administrer pfSense via interface graphique |
+
+### Configuration réseau minimale
+
+- **Serveur LTSP** : IP fixe sur le réseau local
+- **pfSense** : Configuré avec DHCP (sera modifié plus tard)
+- **Clients** : Boot PXE activé dans le BIOS + Disque dur intégré minimum 32 Go
+
+---
+
+## Installation du système de base
+
+### Mise à jour du système
+
+```bash
+sudo apt update
+sudo apt upgrade -y
+```
+
+### Installation d'OpenSSH (facultatif mais recommandé)
+
+```bash
+sudo apt install openssh-server -y
+sudo systemctl enable ssh
+sudo systemctl start ssh
+```
+
+---
+
+## Installation du bureau XFCE
+
+Installation complète de l'environnement de bureau XFCE avec tous les composants nécessaires :
+
+```bash
+sudo apt install xfce4 xfce4-goodies lightdm firefox-esr dbus-x11 -y
+```
+
+**Composants installés :**
+
+- `xfce4` : Environnement de bureau principal
+- `xfce4-goodies` : Applications supplémentaires XFCE
+- `lightdm` : Gestionnaire de connexion graphique
+- `firefox-esr` : Navigateur web
+- `dbus-x11` : Bus de messages pour l'environnement graphique
+
+---
+
+## Installation et configuration de LTSP
+
+### 1. Installation des paquets LTSP
+
+```bash
+sudo apt install ltsp dnsmasq nfs-kernel-server squashfs-tools tftpd-hpa ipxe -y
+```
+
+**Paquets installés :**
+
+- `ltsp` : Linux Terminal Server Project
+- `dnsmasq` : Serveur DHCP/DNS/TFTP léger
+- `nfs-kernel-server` : Partage de fichiers réseau
+- `squashfs-tools` : Création d'images compressées
+- `tftpd-hpa` : Serveur TFTP (sera désactivé au profit de dnsmasq)
+- `ipxe` : Firmware de boot réseau
+
+### 2. Arrêt du service tftpd-hpa
+
+LTSP utilise dnsmasq comme serveur TFTP, donc on désactive tftpd-hpa :
+
+```bash
+sudo systemctl stop tftpd-hpa.service
+sudo systemctl disable tftpd-hpa.service
+sudo systemctl status tftpd-hpa.service
+```
+
+### 3. Construction de l'image LTSP
+
+```bash
+sudo ltsp image /
+```
+
+> **Note:** Cette commande peut prendre plusieurs minutes - elle crée une image compressée du système.
+
+### 4. Configuration des services LTSP
+
+Exécutez ces commandes dans l'ordre :
+
+```bash
+sudo ltsp dnsmasq    # Configure dnsmasq pour LTSP
+sudo ltsp initrd     # Génère l'initramfs pour le boot
+sudo ltsp ipxe       # Configure iPXE
+sudo ltsp kernel     # Configure le kernel
+sudo ltsp nfs        # Configure les exports NFS
+```
+
+---
+
+## Configuration du mot de passe root
+
+### 1. Installation de l'outil de génération de hash
+
+```bash
+sudo apt install whois -y
+```
+
+### 2. Génération du hash du mot de passe
+
+```bash
+mkpasswd -m yescrypt
+```
+
+Entrez votre mot de passe souhaité et **copiez le hash généré** (vous en aurez besoin pour ltsp.conf).
+
+### 3. Application du mot de passe root sur le serveur
+
+```bash
+sudo usermod --password 'VOTRE_HASH_ICI' root
+```
+
+> **Attention:** Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
+
+---
+
+## Configuration de ltsp.conf
+
+### 1. Édition du fichier de configuration
+
+```bash
+sudo nano /etc/ltsp/ltsp.conf
+```
+
+### 2. Contenu du fichier ltsp.conf
+
+Copiez et adaptez la configuration suivante :
+
+```ini
+[server]
+# IP du serveur LTSP
+SERVER="192.168.1.100"
+
+[common]
+# Timeout du menu de boot (-1 = pas de timeout)
+MENU_TIMEOUT="-1"
+
+[clients]
+# Connexion automatique avec le compte 'internet'
+AUTOLOGIN=internet
+# Pas de demande de reconnexion
+RELOGIN=0
+# Définir le mot de passe root sur les clients
+POST_INIT_SET_ROOT_HASH="section_set_root_hash"
+# Inclure la configuration des moniteurs CRT
+INCLUDE=crt_monitor
+# Montage automatique de la partition /home
+FSTAB_x="LABEL=home     /home   ext4    defaults        0       0"
+# Serveur d'impression
+CUPS_SERVER="localhost"
+
+[set_root_hash]
+# Commande pour définir le mot de passe root (remplacez par votre hash)
+sed 's|^root:[^:]*:|root:$y$j9T$VOTRE_HASH_COMPLET_ICI:|' -i /etc/shadow
+
+[crt_monitor]
+# Configuration pour différentes résolutions d'écran
+X_HORIZSYNC="28.0-87.0"
+X_VERTREFRESH="43.0-87.0"
+X_MODES='"1920x1080" "1680x1050" "1280x720" "1280x800" "1024x768" "800x600" "640x480"'
+```
+
+)
+
+---
+
+## Création du compte utilisateur
 
 ### 1. Création du répertoire home dans /etc
 
@@ -226,7 +430,7 @@ Entrez le mot de passe souhaité pour l'utilisateur `internet`.
 
 ---
 
-## 🌐 Configuration réseau
+## Configuration réseau
 
 ### Activation du routage IP
 
@@ -276,7 +480,7 @@ Après le redémarrage, testez la connexion avec le compte `internet` via la con
 
 ---
 
-## 🚀 Déploiement du client
+## Déploiement du client
 
 ### 1. Préparation du serveur
 
@@ -317,7 +521,7 @@ Repérez la partition que vous souhaitez utiliser pour /home (exemple: `/dev/sda
 sudo mkfs.ext4 /dev/sda1
 ```
 
-> ⚠️ **Attention :** Cette commande efface toutes les données de la partition !
+> **Attention:** Cette commande efface toutes les données de la partition.
 
 #### Définir le label
 
@@ -348,11 +552,11 @@ cd /etc/home
 rsync -av --progress internet /home/
 ```
 
-✅ **Le client est maintenant entièrement configuré !**
+**Configuration terminée.** Le client est maintenant entièrement configuré.
 
 ---
 
-## 🔄 Synchronisation des profils utilisateur LTSP
+## Synchronisation des profils utilisateur LTSP
 
 ### Étape 1 : Personnaliser l'interface utilisateur
 
@@ -389,26 +593,26 @@ sudo rsync -av --progress --delete-after /etc/home/internet/ /home/internet/
 
 Cette commande copie le profil de référence depuis `/etc/home/internet/` (serveur) vers `/home/internet/` (client local).
 
-> ⚠️ **Attention :**
+> **Attention:**
 > - L'option `--delete` supprime les fichiers sur la destination qui n'existent pas sur la source
 > - Vérifiez toujours le sens de synchronisation pour éviter les pertes de données
 > - Testez d'abord sans `--delete` si vous n'êtes pas sûr
 
-### 🤖 Automatisation (facultatif)
+### Automatisation (facultatif)
 
-Pour automatiser la synchronisation au démarrage des clients LTSP, j'ai créé un script disponible ici :
+Pour automatiser la synchronisation au démarrage des clients LTSP, un script est disponible :
 
-**🔗 [Script-Update-Image-LTSP](https://github.com/Mayse-55/Script-Update-Image-LTSP)**
+**[Script-Update-Image-LTSP](https://github.com/Mayse-55/Script-Update-Image-LTSP)**
 
-#### Fonctionnalités du script :
+#### Fonctionnalités du script
 
-- ✅ **Synchronisation intelligente** : Se lance automatiquement au démarrage de la session
-- ✅ **Exécution unique** : Système de flag pour ne s'exécuter qu'une fois par session
-- ✅ **Interface utilisateur** : Terminal XFCE4 avec progression visuelle
-- ✅ **Exclusions intelligentes** : Préserve les données personnelles des utilisateurs
-- ✅ **Redémarrage automatique** : Compte à rebours de 10 secondes
+- **Synchronisation intelligente** : Se lance automatiquement au démarrage de la session
+- **Exécution unique** : Système de flag pour ne s'exécuter qu'une fois par session
+- **Interface utilisateur** : Terminal XFCE4 avec progression visuelle
+- **Exclusions intelligentes** : Préserve les données personnelles des utilisateurs
+- **Redémarrage automatique** : Compte à rebours de 10 secondes
 
-#### Déroulement du script :
+#### Déroulement du script
 
 1. Vérification du flag → si déjà présent, le script s'arrête
 2. Ouverture d'un terminal graphique si nécessaire
@@ -421,7 +625,7 @@ Consultez le dépôt GitHub pour l'installation et la configuration détaillées
 
 ---
 
-## 🔗 Intégration avec pfSense
+## Intégration avec pfSense
 
 Cette section permet de transférer la gestion DHCP à pfSense tout en conservant le boot PXE LTSP.
 
@@ -466,24 +670,24 @@ sudo systemctl enable tftpd-hpa.service
 
 1. Redémarrez un client en mode PXE
 2. Le client devrait maintenant :
-   - ✅ Obtenir une IP du serveur DHCP pfSense
-   - ✅ Booter via iPXE depuis le serveur LTSP
+   - Obtenir une IP du serveur DHCP pfSense
+   - Booter via iPXE depuis le serveur LTSP
 
 ### 5. Redémarrage du client
 
 Redémarrez la machine cliente. Elle devrait maintenant :
 
-1. ✅ Obtenir une IP via DHCP
-2. ✅ Charger iPXE
-3. ✅ Trouver `autoexec.ipxe`
-4. ✅ Charger `ltsp.ipxe`
-5. ✅ Booter sur le système LTSP
+1. Obtenir une IP via DHCP
+2. Charger iPXE
+3. Trouver `autoexec.ipxe`
+4. Charger `ltsp.ipxe`
+5. Booter sur le système LTSP
 
-✅ **Configuration terminée !** Vous pouvez maintenant mettre en place un portail captif ou d'autres fonctionnalités pfSense.
+**Configuration terminée.** Vous pouvez maintenant mettre en place un portail captif ou d'autres fonctionnalités pfSense.
 
 ---
 
-## 🔍 Dépannage
+## Dépannage
 
 ### 1. Le client ne boot pas en PXE
 
@@ -558,7 +762,7 @@ sudo chmod 644 /srv/tftp/autoexec.ipxe
 
 ---
 
-## 📝 Notes importantes
+## Notes importantes
 
 - Ce guide est conçu pour un **environnement de test (hors production)**
 - Pensez à faire des snapshots de vos VMs avant les modifications importantes
@@ -566,11 +770,23 @@ sudo chmod 644 /srv/tftp/autoexec.ipxe
 
 ---
 
-## 👨‍💻 Auteur
+## Licence
+
+Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+---
+
+## Auteur
 
 **Mayse**
 
 - GitHub: [@Mayse-55](https://github.com/Mayse-55)
+
+---
+
+## Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
 
 ---
 
