@@ -416,7 +416,11 @@ sudo systemctl enable tftpd-hpa.service
    - Obtenir une IP du serveur DHCP pfSense
    - Booter via iPXE depuis le serveur LTSP
 
-> [!WARNING] **Fix LTSP iPXE : Erreur "autoexec.ipxe not found"**
+> [!WARNING]
+> **LTSP / iPXE**
+>  
+> Erreur détectée : `autoexec.ipxe not found`  
+> → Procédure de correction requise
 
 ### Symptôme
 Lors du boot PXE, la machine affiche :
