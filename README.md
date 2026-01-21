@@ -553,7 +553,7 @@ Après cela, dirigez-vous vers **PfSense**.
 
    **Si vous avez des problèmes de connexion** sur certaines VM (comme un DNS qui est sur l'interface du Captive Portal) :
    - Aller dans **Allowed IP addresses**
-   - Ajouter votre IP serveur : `192.168.1.0/32`
+   - Ajouter L'IP de la machine qui ne fonctionne pas avec le portail : `192.168.1.0/32`
    - Mettez `/32` car c'est la seule IP que l'on veut autoriser à passer à travers le portail Captive.
 
 ## 4. Configuration du Plymouth sur le serveur LTSP
