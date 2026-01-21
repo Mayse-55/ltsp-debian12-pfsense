@@ -40,7 +40,7 @@
 - **Clients** : Boot PXE activé dans le BIOS + Disque dur intégré minimum 32 Go
 
 > [!caution]
-> **Attention cette doc et la seulement pour des clients virtuelles**
+> **Attention cette doc est seulement pour des clients virtuelles**
 
 ---
 
@@ -486,6 +486,102 @@ Redémarrez la machine cliente. Elle devrait maintenant :
 5. Booter sur le système LTSP
 
 **Configuration terminée.** Vous pouvez maintenant mettre en place un portail captif ou d'autres fonctionnalités pfSense.
+
+---
+
+# Config-LTSP-Client-Physique
+À **ce stade**, votre LTSP fonctionne avec le DHCP PfSense et les clients virtuels boot.
+
+## 1. Installation d'une VM Linux Debian 12 pour FreeRadius
+Elle doit être **dans le même LAN** que le serveur LTSP.
+
+## 2. Installation de FreeRadius (facultatif)
+```bash
+apt install freeradius 
+```
+```bash
+nano /etc/freeradius/3.0/clients.conf
+```
+Ajouter à la fin :
+```
+client pfsense {
+  ipaddr = IP_de_PfSense
+  secret = test
+}
+```
+
+### Création du chiffrement du mot de passe de l'utilisateur
+```bash
+echo -n "1234" | md5sum
+```
+```bash
+nano /etc/freeradius/3.0/users
+```
+Ajouter à la fin :
+```
+nomdutilisateur MD5-Password := "le_hash_que_vous_avez_créé"
+  Class = "ltsp-client"
+```
+
+## 3. Configuration PfSense
+Après cela, dirigez-vous vers **PfSense**.
+
+1. **Aller dans** : `System` → `User Manager` → `Authentification Servers` → `Add`
+   - **Descriptive name** : RADIUS
+   - **Type** : RADIUS
+   - **Protocol** : MD5-CHAP
+   - **Hostname or IP address** : IP_du_serveur_RADIUS
+   - **Share Secret** : test
+   - **Authentification port** : 1812
+   - **Accounting port** : 1813
+   - **Radius NAS IP Attribute** : interface où se trouve RADIUS
+
+2. **Tester l'authentification** : `Diagnostics` → `Authentification`
+   - **Authentification Server** : RADIUS
+   - **Username** : nomdutilisateur
+   - **Password** : 1234
+
+   **Vous devriez avoir** (après avoir cliqué sur Test) :
+   ```
+   User nomdutilisateur authenticated successfully. This user is a member of groups
+   ```
+
+3. **Configurer le Captive Portal** :
+   - Enable **Captive Portal**
+   - Faire la configuration que vous souhaitez
+   - Changer **Authentification serveur** : mettre **RADIUS**
+   - **Save**
+
+   **Si vous avez des problèmes de connexion** sur certaines VM (comme un DNS qui est sur l'interface du Captive Portal) :
+   - Aller dans **Allowed IP addresses**
+   - Ajouter votre IP serveur : `192.168.1.0/32`
+   - Mettez `/32` car c'est la seule IP que l'on veut autoriser à passer à travers le portail Captive.
+
+## 4. Configuration du Plymouth sur le serveur LTSP
+
+```bash
+apt install plymouth plymouth-themes
+```
+
+**Regarder la liste des thèmes de démarrage disponibles :**
+```bash
+sudo plymouth-set-default-theme -l
+```
+
+**Exemple de sortie :**
+<img width="1397" height="868" alt="image" src="https://github.com/user-attachments/assets/5d997cca-1137-459a-9700-e93fdcd8e674" />
+
+**Appliquer un thème :**
+```bash
+sudo plymouth-set-default-theme -R nomdutheme
+```
+
+**Puis recompiler l'image LTSP :**
+```bash
+ltsp image /
+```
+
+**Maintenant tout est à votre disposition, plus qu'à modifier certains éléments pour personnaliser à votre façon. En tous cas le plus gros est fait : LTSP et PfSense sont configurés.**
 
 ---
 
