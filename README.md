@@ -662,7 +662,7 @@ sudo chmod 644 /srv/tftp/autoexec.ipxe
 
 ## Notes importantes
 
-- Ce guide est conçu pour un **environnement de test (hors production)**
+- Ce guide est conçu pour un **environnement de test (hors production)** à vérifier soigneusement si c'est pour de la production
 - Pensez à faire des snapshots de vos VMs avant les modifications importantes
 - Adaptez les plages IP et configurations réseau à votre environnement
 
