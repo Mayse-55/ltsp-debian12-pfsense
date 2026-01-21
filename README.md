@@ -18,7 +18,7 @@
 - [Déploiement du client](#déploiement-du-client)
 - [Synchronisation des profils utilisateur](#synchronisation-des-profils-utilisateur-ltsp)
 - [Intégration avec pfSense](#intégration-avec-pfsense)
-- [Config-LTSP-Client-Physique](#config-ltsp-client-physique)
+- [Configuration facultatif pour les clients physiques ou virtuelles](#configuration-facultatif-pour-les-clients-physiques-ou-virtuelles)
 - [Dépannage](#dépannage)
 
 ---
