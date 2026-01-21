@@ -569,7 +569,10 @@ sudo plymouth-set-default-theme -l
 ```
 
 **Exemple de sortie :**
-<img width="1397" height="868" alt="image" src="https://github.com/user-attachments/assets/5d997cca-1137-459a-9700-e93fdcd8e674" />
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/f3719fc9-3a86-4d81-a907-46f66821dbaf" />
+
+https://www.gnome-look.org/p/2112595
 
 **Appliquer un thème :**
 ```bash
