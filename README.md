@@ -409,20 +409,18 @@ Pour automatiser la synchronisation au démarrage des clients LTSP, un script es
 
 #### Fonctionnalités du script
 
-- **Synchronisation intelligente** : Se lance automatiquement au démarrage de la session
+- **Synchronisation intelligente** : Se lance automatiquement avant le lancement de la session (invisible)
 - **Exécution unique** : Système de flag pour ne s'exécuter qu'une fois par session
-- **Interface utilisateur** : Terminal XFCE4 avec progression visuelle
 - **Exclusions intelligentes** : Préserve les données personnelles des utilisateurs
 - **Redémarrage automatique** : Compte à rebours de 10 secondes
 
 #### Déroulement du script
 
 1. Vérification du flag → si déjà présent, le script s'arrête
-2. Ouverture d'un terminal graphique si nécessaire
-3. Création du flag pour marquer l'exécution
-4. Synchronisation avec `rsync` (avec barre de progression)
-5. Compte à rebours de 10 secondes
-6. Redémarrage automatique du client
+2. Création du flag pour marquer l'exécution
+3. Synchronisation avec `rsync` (avec barre de progression)
+4. Compte à rebours de 10 secondes
+5. Redémarrage automatique du client
 
 Consultez le dépôt GitHub pour l'installation et la configuration détaillées.
 
