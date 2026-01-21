@@ -39,7 +39,8 @@
 - **pfSense** : Configuré avec DHCP (sera modifié plus tard)  
 - **Clients** : Boot PXE activé dans le BIOS + Disque dur intégré minimum 32 Go  
 
-> ⚠️ **Note** : Adaptez toutes les IP du guide à votre réseau local.
+> [!note]
+> Adaptez toutes les IP du guide à votre réseau local.
 
 ---
 
@@ -113,7 +114,7 @@ sudo systemctl status tftpd-hpa.service
 sudo ltsp image /
 ```
 
-> ⚠️ Cette commande peut prendre plusieurs minutes - elle crée une image compressée du système.
+> Cette commande peut prendre plusieurs minutes - elle crée une image compressée du système.
 
 ### 4. Configuration des services LTSP
 
@@ -151,7 +152,7 @@ Entrez votre mot de passe souhaité et **copiez le hash généré** (vous en aur
 sudo usermod --password 'VOTRE_HASH_ICI' root
 ```
 
-> ⚠️ Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
+>  Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
 
 ---
 
@@ -201,7 +202,7 @@ X_VERTREFRESH="43.0-87.0"
 X_MODES='"1920x1080" "1680x1050" "1280x720" "1280x800" "1024x768" "800x600" "640x480"'
 ```
 
-> ⚠️ Remplacez :
+> Remplacez :
 >
 > * `192.168.1.100` par l'IP de votre serveur LTSP
 > * `VOTRE_HASH_COMPLET_ICI` par le hash généré précédemment (tout le hash, y compris les `$`)
@@ -317,7 +318,7 @@ Repérez la partition que vous souhaitez utiliser pour `/home` (exemple: `/dev/s
 sudo mkfs.ext4 /dev/sda1
 ```
 
-> ⚠️ Cette commande efface toutes les données de la partition.
+>  Cette commande efface toutes les données de la partition.
 
 #### Définir le label
 
@@ -382,8 +383,6 @@ Cette commande sauvegarde toutes les modifications du profil utilisateur depuis 
 sudo rsync -av --progress --delete-after /etc/home/internet/ /home/internet/
 ```
 
-> ⚠️
->
 > * L'option `--delete` supprime les fichiers sur la destination qui n'existent pas sur la source
 > * Vérifiez toujours le sens de synchronisation pour éviter les pertes de données
 > * Testez d'abord sans `--delete` si vous n'êtes pas sûr
@@ -546,6 +545,4 @@ sudo chmod 644 /srv/tftp/autoexec.ipxe
 ---
 
 **Dernière mise à jour :** Janvier 2026
-**Version :** 1.0
-
-```
+**Version :** 1.2
