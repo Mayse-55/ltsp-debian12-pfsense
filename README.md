@@ -490,7 +490,7 @@ Redémarrez la machine cliente. Elle devrait maintenant :
 
 ---
 
-# Config-LTSP-Client-Physique
+# Configuration facultatif pour les clients physiques ou virtuelles
 À **ce stade**, votre LTSP fonctionne avec le DHCP PfSense et les clients virtuels boot.
 
 ## 1. Installation d'une VM Linux Debian 12 pour FreeRadius
