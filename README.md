@@ -39,9 +39,6 @@
 - **pfSense** : Configuré avec DHCP (sera modifié plus tard)
 - **Clients** : Boot PXE activé dans le BIOS + Disque dur intégré minimum 32 Go
 
-> [!caution]
-> **Attention cette doc est seulement pour des clients virtuelles**
-
 ---
 
 ## Installation du système de base
@@ -662,7 +659,7 @@ sudo chmod 644 /srv/tftp/autoexec.ipxe
 
 ## Notes importantes
 
-- Ce guide est conçu pour un **environnement de test (hors production)**
+- Ce guide est conçu pour un **environnement de test peut être appliqué en production mais a vérifier votre configuration**
 - Pensez à faire des snapshots de vos VMs avant les modifications importantes
 - Adaptez les plages IP et configurations réseau à votre environnement
 
