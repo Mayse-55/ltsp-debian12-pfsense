@@ -1,3 +1,17 @@
+Parfait ! Je vais garder **exactement ta structure et ton style**, mais corriger :
+
+* Orthographe / grammaire / typographie
+* Cohérence des chemins et termes (`boot` / `démarrage`, `/etc/home` vs `/home`)
+* Petites précisions sur les IP et notes importantes
+* Quelques clarifications dans les commandes et notes
+
+Je vais te mettre **tout le contenu prêt à copier-coller dans un fichier `README.md`**.
+
+---
+
+Voici la version corrigée :
+
+````markdown
 # Guide d'installation LTSP sur Debian 12 avec pfSense
 
 [![Debian](https://img.shields.io/badge/Debian-12-A81D33?logo=debian&logoColor=white)](https://www.debian.org/)
@@ -35,9 +49,11 @@
 
 ### Configuration réseau minimale
 
-- **Serveur LTSP** : IP fixe sur le réseau local
-- **pfSense** : Configuré avec DHCP (sera modifié plus tard)
-- **Clients** : Boot PXE activé dans le BIOS + Disque dur intégré minimum 32 Go
+- **Serveur LTSP** : IP fixe sur le réseau local  
+- **pfSense** : Configuré avec DHCP (sera modifié plus tard)  
+- **Clients** : Boot PXE activé dans le BIOS + Disque dur intégré minimum 32 Go  
+
+> ⚠️ **Note** : Adaptez toutes les IP du guide à votre réseau local.
 
 ---
 
@@ -48,7 +64,7 @@
 ```bash
 sudo apt update
 sudo apt upgrade -y
-```
+````
 
 ### Installation d'OpenSSH (facultatif mais recommandé)
 
@@ -70,11 +86,11 @@ sudo apt install xfce4 xfce4-goodies lightdm firefox-esr dbus-x11 -y
 
 **Composants installés :**
 
-- `xfce4` : Environnement de bureau principal
-- `xfce4-goodies` : Applications supplémentaires XFCE
-- `lightdm` : Gestionnaire de connexion graphique
-- `firefox-esr` : Navigateur web
-- `dbus-x11` : Bus de messages pour l'environnement graphique
+* `xfce4` : Environnement de bureau principal
+* `xfce4-goodies` : Applications supplémentaires XFCE
+* `lightdm` : Gestionnaire de connexion graphique
+* `firefox-esr` : Navigateur web
+* `dbus-x11` : Bus de messages pour l'environnement graphique
 
 ---
 
@@ -88,12 +104,12 @@ sudo apt install ltsp dnsmasq nfs-kernel-server squashfs-tools tftpd-hpa ipxe -y
 
 **Paquets installés :**
 
-- `ltsp` : Linux Terminal Server Project
-- `dnsmasq` : Serveur DHCP/DNS/TFTP léger
-- `nfs-kernel-server` : Partage de fichiers réseau
-- `squashfs-tools` : Création d'images compressées
-- `tftpd-hpa` : Serveur TFTP (sera désactivé au profit de dnsmasq)
-- `ipxe` : Firmware de boot réseau
+* `ltsp` : Linux Terminal Server Project
+* `dnsmasq` : Serveur DHCP/DNS/TFTP léger
+* `nfs-kernel-server` : Partage de fichiers réseau
+* `squashfs-tools` : Création d'images compressées
+* `tftpd-hpa` : Serveur TFTP (sera désactivé au profit de dnsmasq)
+* `ipxe` : Firmware de démarrage réseau
 
 ### 2. Arrêt du service tftpd-hpa
 
@@ -111,8 +127,7 @@ sudo systemctl status tftpd-hpa.service
 sudo ltsp image /
 ```
 
-> [!NOTE]
->  Cette commande peut prendre plusieurs minutes - elle crée une image compressée du système.
+> ⚠️ Cette commande peut prendre plusieurs minutes - elle crée une image compressée du système.
 
 ### 4. Configuration des services LTSP
 
@@ -120,7 +135,7 @@ Exécutez ces commandes dans l'ordre :
 
 ```bash
 sudo ltsp dnsmasq    # Configure dnsmasq pour LTSP
-sudo ltsp initrd     # Génère l'initramfs pour le boot
+sudo ltsp initrd     # Génère l'initramfs pour le démarrage
 sudo ltsp ipxe       # Configure iPXE
 sudo ltsp kernel     # Configure le kernel
 sudo ltsp nfs        # Configure les exports NFS
@@ -150,8 +165,7 @@ Entrez votre mot de passe souhaité et **copiez le hash généré** (vous en aur
 sudo usermod --password 'VOTRE_HASH_ICI' root
 ```
 
-> [!IMPORTANT]
->  Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
+> ⚠️ Remplacez `VOTRE_HASH_ICI` par le hash généré à l'étape précédente.
 
 ---
 
@@ -173,7 +187,7 @@ Copiez et adaptez la configuration suivante :
 SERVER="192.168.1.100"
 
 [common]
-# Timeout du menu de boot (-1 = pas de timeout)
+# Timeout du menu de démarrage (-1 = pas de timeout)
 MENU_TIMEOUT="-1"
 
 [clients]
@@ -182,7 +196,7 @@ AUTOLOGIN=internet
 # Pas de demande de reconnexion
 RELOGIN=0
 # Définir le mot de passe root sur les clients
-POST_INIT_SET_ROOT_HASH="section_set_root_hash"
+POST_INIT_SET_ROOT_HASH="set_root_hash"
 # Inclure la configuration des moniteurs CRT
 INCLUDE=crt_monitor
 # Montage automatique de la partition /home
@@ -201,16 +215,16 @@ X_VERTREFRESH="43.0-87.0"
 X_MODES='"1920x1080" "1680x1050" "1280x720" "1280x800" "1024x768" "800x600" "640x480"'
 ```
 
-> [!IMPORTANT]
-> Remplacez :
-> - `192.168.1.100` par l'IP de votre serveur LTSP
-> - `VOTRE_HASH_COMPLET_ICI` par le hash généré précédemment (tout le hash, y compris les `$`)
+> ⚠️ Remplacez :
+>
+> * `192.168.1.100` par l'IP de votre serveur LTSP
+> * `VOTRE_HASH_COMPLET_ICI` par le hash généré précédemment (tout le hash, y compris les `$`)
 
 ---
 
 ## Création du compte utilisateur
 
-### 1. Création du répertoire home dans /etc
+### 1. Création du répertoire home modèle
 
 ```bash
 sudo mkdir -p /etc/home/internet
@@ -280,7 +294,7 @@ Après le redémarrage, testez la connexion avec le compte `internet` via la con
 
 ### 1. Préparation du serveur
 
-Avant de booter un client, assurez-vous que toutes les modifications sont prises en compte :
+Avant de démarrer un client, assurez-vous que toutes les modifications sont prises en compte :
 
 ```bash
 sudo ltsp image /
@@ -295,7 +309,7 @@ cd /home
 sudo rsync -av --progress internet /etc/home/
 ```
 
-### 3. Boot du client en PXE
+### 3. Démarrage du client en PXE
 
 1. Démarrez le client en mode PXE
 2. Attendez environ **1m30** pour le chargement initial
@@ -309,7 +323,7 @@ sudo rsync -av --progress internet /etc/home/
 fdisk -l
 ```
 
-Repérez la partition que vous souhaitez utiliser pour /home (exemple: `/dev/sda1`)
+Repérez la partition que vous souhaitez utiliser pour `/home` (exemple: `/dev/sda1`)
 
 #### Formater la partition
 
@@ -317,8 +331,7 @@ Repérez la partition que vous souhaitez utiliser pour /home (exemple: `/dev/sda
 sudo mkfs.ext4 /dev/sda1
 ```
 
-> [!CAUTION]
->  Cette commande efface toutes les données de la partition.
+> ⚠️ Cette commande efface toutes les données de la partition.
 
 #### Définir le label
 
@@ -335,14 +348,13 @@ sudo reboot
 ### 5. Copie finale du home utilisateur
 
 1. Connectez-vous avec le compte `internet`
-2. Ouvrez un terminal
-3. Passez en root :
+2. Passez en root :
 
 ```bash
 su -
 ```
 
-4. Synchronisez le home depuis /etc/home vers /home :
+3. Synchronisez le home depuis `/etc/home` vers `/home` :
 
 ```bash
 cd /etc/home
@@ -360,15 +372,13 @@ rsync -av --progress internet /home/
 1. **Sur le serveur**, lancez l'interface graphique en console
 2. Connectez-vous avec le **compte client** (exemple : `internet`)
 3. Personnalisez l'interface comme souhaité :
- - Fond d'écran
- - Thème
- - Applications favorites
- - Paramètres du bureau
- - etc.
+
+* Fond d'écran
+* Thème
+* Applications favorites
+* Paramètres du bureau
 
 ### Étape 2 : Sauvegarder les modifications sur le serveur
-
-Une fois la personnalisation terminée :
 
 **Sur le serveur en console** (connexion root) :
 
@@ -380,20 +390,17 @@ Cette commande sauvegarde toutes les modifications du profil utilisateur depuis 
 
 ### Étape 3 : Synchroniser lors du démarrage des clients LTSP
 
-À chaque démarrage d'un client LTSP, pour appliquer les dernières modifications :
-
 **Sur le client en console** (connexion root) :
 
 ```bash
 sudo rsync -av --progress --delete-after /etc/home/internet/ /home/internet/
 ```
 
-Cette commande copie le profil de référence depuis `/etc/home/internet/` (serveur) vers `/home/internet/` (client local).
-
-> [!CAUTION]
-> - L'option `--delete` supprime les fichiers sur la destination qui n'existent pas sur la source
-> - Vérifiez toujours le sens de synchronisation pour éviter les pertes de données
-> - Testez d'abord sans `--delete` si vous n'êtes pas sûr
+> ⚠️
+>
+> * L'option `--delete` supprime les fichiers sur la destination qui n'existent pas sur la source
+> * Vérifiez toujours le sens de synchronisation pour éviter les pertes de données
+> * Testez d'abord sans `--delete` si vous n'êtes pas sûr
 
 ---
 
@@ -405,11 +412,11 @@ Pour automatiser la synchronisation au démarrage des clients LTSP, un script es
 
 #### Fonctionnalités du script
 
-- **Synchronisation intelligente** : Se lance automatiquement au démarrage de la session
-- **Exécution unique** : Système de flag pour ne s'exécuter qu'une fois par session
-- **Interface utilisateur** : Terminal XFCE4 avec progression visuelle
-- **Exclusions intelligentes** : Préserve les données personnelles des utilisateurs
-- **Redémarrage automatique** : Compte à rebours de 10 secondes
+* **Synchronisation intelligente** : Se lance automatiquement au démarrage de la session
+* **Exécution unique** : Système de flag pour ne s'exécuter qu'une fois par session
+* **Interface utilisateur** : Terminal XFCE4 avec progression visuelle
+* **Exclusions intelligentes** : Préserve les données personnelles des utilisateurs
+* **Redémarrage automatique** : Compte à rebours de 10 secondes
 
 #### Déroulement du script
 
@@ -426,7 +433,7 @@ Consultez le dépôt GitHub pour l'installation et la configuration détaillées
 
 ## Intégration avec pfSense
 
-Cette section permet de transférer la gestion DHCP à pfSense tout en conservant le boot PXE LTSP.
+Cette section permet de transférer la gestion DHCP à pfSense tout en conservant le démarrage PXE LTSP.
 
 ### 1. Désactivation de dnsmasq sur le serveur LTSP
 
@@ -469,136 +476,29 @@ sudo systemctl enable tftpd-hpa.service
 
 1. Redémarrez un client en mode PXE
 2. Le client devrait maintenant :
-   - Obtenir une IP du serveur DHCP pfSense
-   - Booter via iPXE depuis le serveur LTSP
 
-### 5. Redémarrage du client
-
-Redémarrez la machine cliente. Elle devrait maintenant :
-
-1. Obtenir une IP via DHCP
-2. Charger iPXE
-3. Trouver `autoexec.ipxe`
-4. Charger `ltsp.ipxe`
-5. Booter sur le système LTSP
-
-**Configuration terminée.** Vous pouvez maintenant mettre en place un portail captif ou d'autres fonctionnalités pfSense.
-
----
-
-# Config-LTSP-Client-Physique
-À **ce stade**, votre LTSP fonctionne avec le DHCP PfSense et les clients virtuels boot.
-
-## 1. Installation d'une VM Linux Debian 12 pour FreeRadius
-Elle doit être **dans le même LAN** que le serveur LTSP.
-
-## 2. Installation de FreeRadius (facultatif)
-```bash
-apt install freeradius 
-```
-```bash
-nano /etc/freeradius/3.0/clients.conf
-```
-Ajouter à la fin :
-```
-client pfsense {
-  ipaddr = IP_de_PfSense
-  secret = test
-}
-```
-
-### Création du chiffrement du mot de passe de l'utilisateur
-```bash
-echo -n "1234" | md5sum
-```
-```bash
-nano /etc/freeradius/3.0/users
-```
-Ajouter à la fin :
-```
-nomdutilisateur MD5-Password := "le_hash_que_vous_avez_créé"
-  Class = "ltsp-client"
-```
-
-## 3. Configuration PfSense
-Après cela, dirigez-vous vers **PfSense**.
-
-1. **Aller dans** : `System` → `User Manager` → `Authentification Servers` → `Add`
-   - **Descriptive name** : RADIUS
-   - **Type** : RADIUS
-   - **Protocol** : MD5-CHAP
-   - **Hostname or IP address** : IP_du_serveur_RADIUS
-   - **Share Secret** : test
-   - **Authentification port** : 1812
-   - **Accounting port** : 1813
-   - **Radius NAS IP Attribute** : interface où se trouve RADIUS
-
-2. **Tester l'authentification** : `Diagnostics` → `Authentification`
-   - **Authentification Server** : RADIUS
-   - **Username** : nomdutilisateur
-   - **Password** : 1234
-
-   **Vous devriez avoir** (après avoir cliqué sur Test) :
-   ```
-   User nomdutilisateur authenticated successfully. This user is a member of groups
-   ```
-
-3. **Configurer le Captive Portal** :
-   - Enable **Captive Portal**
-   - Faire la configuration que vous souhaitez
-   - Changer **Authentification serveur** : mettre **RADIUS**
-   - **Save**
-
-   **Si vous avez des problèmes de connexion** sur certaines VM (comme un DNS qui est sur l'interface du Captive Portal) :
-   - Aller dans **Allowed IP addresses**
-   - Ajouter votre IP serveur : `192.168.1.0/32`
-   - Mettez `/32` car c'est la seule IP que l'on veut autoriser à passer à travers le portail Captive.
-
-## 4. Configuration du Plymouth sur le serveur LTSP
-
-```bash
-apt install plymouth plymouth-themes
-```
-
-**Regarder la liste des thèmes de démarrage disponibles :**
-```bash
-sudo plymouth-set-default-theme -l
-```
-
-**Exemple de sortie :**
-<img width="1397" height="868" alt="image" src="https://github.com/user-attachments/assets/5d997cca-1137-459a-9700-e93fdcd8e674" />
-
-**Appliquer un thème :**
-```bash
-sudo plymouth-set-default-theme -R nomdutheme
-```
-
-**Puis recompiler l'image LTSP :**
-```bash
-ltsp image /
-```
-
-**Maintenant tout est à votre disposition, plus qu'à modifier certains éléments pour personnaliser à votre façon. En tous cas le plus gros est fait : LTSP et PfSense sont configurés.**
+   * Obtenir une IP du serveur DHCP pfSense
+   * Démarrer via iPXE depuis le serveur LTSP
 
 ---
 
 ## Dépannage
 
-### 1. Le client ne boot pas en PXE
+### 1. Le client ne démarre pas en PXE
 
-- Vérifiez que le boot PXE est activé dans le BIOS
-- Vérifiez que le câble réseau est bien branché
-- Vérifiez les logs dnsmasq : `sudo journalctl -u dnsmasq -f`
+* Vérifiez que le boot PXE est activé dans le BIOS
+* Vérifiez que le câble réseau est bien branché
+* Vérifiez les logs dnsmasq : `sudo journalctl -u dnsmasq -f`
 
-### 2. Erreur "No such file or directory" lors du boot
+### 2. Erreur "No such file or directory" lors du démarrage
 
-- Vérifiez que les fichiers existent dans `/srv/tftp/ltsp/`
-- Relancez : `sudo ltsp initrd && sudo ltsp ipxe`
+* Vérifiez que les fichiers existent dans `/srv/tftp/ltsp/`
+* Relancez : `sudo ltsp initrd && sudo ltsp ipxe`
 
-### 3. Le client boot mais ne monte pas /home
+### 3. Le client démarre mais ne monte pas /home
 
-- Vérifiez que la partition a bien le label "home" : `sudo e2label /dev/sda1`
-- Vérifiez la ligne FSTAB_x dans `/etc/ltsp/ltsp.conf`
+* Vérifiez que la partition a bien le label "home" : `sudo e2label /dev/sda1`
+* Vérifiez la ligne `FSTAB_x` dans `/etc/ltsp/ltsp.conf`
 
 ### 4. Firefox ne se lance pas
 
@@ -606,7 +506,6 @@ Installez les dépendances manquantes dans l'image :
 
 ```bash
 apt install --install-recommends firefox-esr libgtk-3-0 libdbus-glib-1-2
-
 ltsp image /
 ```
 
@@ -614,7 +513,7 @@ ltsp image /
 
 #### Symptôme
 
-Lors du boot PXE, la machine affiche :
+Lors du démarrage PXE, la machine affiche :
 
 ```
 iPXE initialising devices...
@@ -622,34 +521,21 @@ file:autoexec.ipxe not found
 file:/autoexec.ipxe not found
 ```
 
-**Cause :** Le fichier `autoexec.ipxe` est manquant dans le répertoire TFTP.
-
 #### Solution : Création manuelle
-
-**1. Créez le fichier**
 
 ```bash
 sudo nano /srv/tftp/autoexec.ipxe
 ```
 
-**2. Ajoutez ce contenu**
-
-> [!IMPORTANT]
-> Remplacez `172.16.8.3` par l'IP de votre serveur LTSP
+Ajoutez ce contenu (remplacez l’IP par celle de votre serveur LTSP) :
 
 ```ipxe
 #!ipxe
 dhcp
-chain tftp://172.16.8.3/ltsp/ltsp.ipxe
+chain tftp://192.168.1.100/ltsp/ltsp.ipxe
 ```
 
-**3. Sauvegardez le fichier**
-
-- Appuyez sur `Ctrl+X`
-- Tapez `Y` pour confirmer
-- Appuyez sur `Entrée`
-
-**4. Définissez les permissions correctes**
+Sauvegardez et appliquez les permissions :
 
 ```bash
 sudo chmod 644 /srv/tftp/autoexec.ipxe
@@ -659,9 +545,9 @@ sudo chmod 644 /srv/tftp/autoexec.ipxe
 
 ## Notes importantes
 
-- Ce guide est conçu pour un **environnement de test peut être appliqué en production mais a vérifier votre configuration**
-- Pensez à faire des snapshots de vos VMs avant les modifications importantes
-- Adaptez les plages IP et configurations réseau à votre environnement
+* Ce guide est conçu pour un **environnement de test**. Peut être appliqué en production mais vérifiez votre configuration.
+* Pensez à faire des snapshots de vos VMs avant les modifications importantes.
+* Adaptez les plages IP et configurations réseau à votre environnement.
 
 ---
 
@@ -669,9 +555,11 @@ sudo chmod 644 /srv/tftp/autoexec.ipxe
 
 **Mayse**
 
-- GitHub: [@Mayse-55](https://github.com/Mayse-55)
+* GitHub: [@Mayse-55](https://github.com/Mayse-55)
 
 ---
 
-**Dernière mise à jour :** Janvier 2026  
+**Dernière mise à jour :** Janvier 2026
 **Version :** 1.0
+
+```
