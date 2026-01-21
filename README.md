@@ -3,6 +3,8 @@
 [![Debian](https://img.shields.io/badge/Debian-12-A81D33?logo=debian&logoColor=white)](https://www.debian.org/)
 [![pfSense](https://img.shields.io/badge/pfSense-Compatible-212121?logo=pfsense&logoColor=white)](https://www.pfsense.org/)
 
+> [!caution]
+> Attention cette doc et la seulement pour des clients virtuelles 
 ---
 
 ## Table des matières
