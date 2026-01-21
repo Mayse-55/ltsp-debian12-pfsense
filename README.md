@@ -3,8 +3,6 @@
 [![Debian](https://img.shields.io/badge/Debian-12-A81D33?logo=debian&logoColor=white)](https://www.debian.org/)
 [![pfSense](https://img.shields.io/badge/pfSense-Compatible-212121?logo=pfsense&logoColor=white)](https://www.pfsense.org/)
 
-> [!caution]
-> Attention cette doc et la seulement pour des clients virtuelles 
 ---
 
 ## Table des matières
@@ -40,6 +38,9 @@
 - **Serveur LTSP** : IP fixe sur le réseau local
 - **pfSense** : Configuré avec DHCP (sera modifié plus tard)
 - **Clients** : Boot PXE activé dans le BIOS + Disque dur intégré minimum 32 Go
+
+> [!caution]
+> **Attention cette doc et la seulement pour des clients virtuelles**
 
 ---
 
