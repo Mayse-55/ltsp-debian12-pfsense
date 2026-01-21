@@ -568,12 +568,6 @@ apt install plymouth plymouth-themes
 sudo plymouth-set-default-theme -l
 ```
 
-**Exemple de sortie :**
-
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/f3719fc9-3a86-4d81-a907-46f66821dbaf" />
-
-https://www.gnome-look.org/p/2112595
-
 **Appliquer un thème :**
 ```bash
 sudo plymouth-set-default-theme -R nomdutheme
@@ -583,6 +577,8 @@ sudo plymouth-set-default-theme -R nomdutheme
 ```bash
 ltsp image /
 ```
+
+*Vous pouvez télécharger des thémes si vous le souhaitez** https://www.gnome-look.org/browse?cat=108&page=2&ord=latest
 
 **Maintenant tout est à votre disposition, plus qu'à modifier certains éléments pour personnaliser à votre façon. En tous cas le plus gros est fait : LTSP et PfSense sont configurés.**
 
