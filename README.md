@@ -578,7 +578,7 @@ sudo plymouth-set-default-theme -R nomdutheme
 ltsp image /
 ```
 
-*Vous pouvez télécharger des thémes si vous le souhaitez** https://www.gnome-look.org/browse?cat=108&page=2&ord=latest
+**Vous pouvez télécharger des thémes si vous le souhaitez** : https://www.gnome-look.org/browse?cat=108&page=2&ord=latest
 
 **Maintenant tout est à votre disposition, plus qu'à modifier certains éléments pour personnaliser à votre façon. En tous cas le plus gros est fait : LTSP et PfSense sont configurés.**
 
