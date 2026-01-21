@@ -1,17 +1,3 @@
-Parfait ! Je vais garder **exactement ta structure et ton style**, mais corriger :
-
-* Orthographe / grammaire / typographie
-* Cohérence des chemins et termes (`boot` / `démarrage`, `/etc/home` vs `/home`)
-* Petites précisions sur les IP et notes importantes
-* Quelques clarifications dans les commandes et notes
-
-Je vais te mettre **tout le contenu prêt à copier-coller dans un fichier `README.md`**.
-
----
-
-Voici la version corrigée :
-
-````markdown
 # Guide d'installation LTSP sur Debian 12 avec pfSense
 
 [![Debian](https://img.shields.io/badge/Debian-12-A81D33?logo=debian&logoColor=white)](https://www.debian.org/)
