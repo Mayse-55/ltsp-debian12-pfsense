@@ -418,7 +418,7 @@ Pour automatiser la synchronisation au démarrage des clients LTSP, un script es
 
 1. Vérification du flag → si déjà présent, le script s'arrête
 2. Création du flag pour marquer l'exécution
-3. Synchronisation avec `rsync` (avec barre de progression)
+3. Synchronisation avec `rsync`
 4. Compte à rebours de 10 secondes
 5. Redémarrage automatique du client
 
