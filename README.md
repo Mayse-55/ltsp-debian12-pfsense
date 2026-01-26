@@ -675,5 +675,6 @@ sudo chmod 644 /srv/tftp/autoexec.ipxe
 
 ---
 
-**Dernière mise à jour :** Janvier 2026  
-**Version :** 1.2
+**Version :** 1.2  
+**Dernière mise à jour :** Janvier 2026    
+**Documentation réalisée par Nathaël Polnecq**
